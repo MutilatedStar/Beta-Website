@@ -6,6 +6,47 @@
 <title>Design Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* LIGHTBOX */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  animation: modalIn 0.2s ease;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(30,30,30,0.9);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+.lightbox-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -15,6 +56,7 @@
     --border: rgba(255,255,255,0.08);
     --accent: #d4a853;
     --accent2: #8b5cf6;
+    --accent3: #b30000;
     --text: #f0ede6;
     --muted: #888880;
     --card-radius: 16px;
@@ -161,7 +203,7 @@
     transition: all 0.2s;
     display: inline-block;
   }
-  .btn-primary:hover { background: #e8ba6a; transform: translateY(-2px); }
+  .btn-primary:hover { background: #e8ba6a; ; }
 
   .btn-outline {
     background: transparent;
@@ -182,12 +224,12 @@
   section { padding: 6rem 3rem; }
 
   .section-label {
-    font-size: 0.7rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 1rem;
+    margin-top: 1rem;
   }
 
   .section-title {
@@ -227,7 +269,6 @@
 
   .about-image-placeholder {
     width: 100%;
-    aspect-ratio: 3/4;
     background: var(--surface2);
     border-radius: var(--card-radius);
     border: 1px solid var(--border);
@@ -263,17 +304,31 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-top: 2rem;
+    margin-top: 0rem;
+      transition: background-color 1s ease, color 1s ease;
+     margin-bottom: 2rem;
   }
 
   .skill-tag {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 0.35rem 0.9rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-  }
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  transition: color 1s, background-color 1s, border-color 1s; /* ← add this */
+}
+
+/* Each brand color on hover */
+.skill-tag:nth-child(1):hover { background: #ff336622; border-color: #ff3366; color: #ff3366; } /* InDesign */
+.skill-tag:nth-child(2):hover { background: #31a8ff22; border-color: #31a8ff; color: #31a8ff; } /* Photoshop */
+.skill-tag:nth-child(3):hover { background: #ff9a0022; border-color: #ff9a00; color: #ff9a00; } /* Illustrator */
+.skill-tag:nth-child(4):hover { background: #f7df1e22; border-color: #f7df1e; color: #f7df1e; } /* JavaScript */
+.skill-tag:nth-child(5):hover { background: #ab7d3722; border-color: #ffa200; color: #ffa200; } /* Python */
+.skill-tag:nth-child(6):hover { background: #5c2d9122; border-color: #5c2d91; color: #9b6fd4; } /* Visual Studio */
+.skill-tag:nth-child(7):hover { background: #e87d0d22; border-color: #e87d0d; color: #e87d0d; } /* Blender */
+.skill-tag:nth-child(8):hover { background: #f4353522; border-color: #f43535; color: #f43535; } /* DaVinci */
+.skill-tag:nth-child(9):hover { background: #ffffff22; border-color: #aaaaaa; color: #ffffff; } /* Unity */
 
   /* DESIGNS */
   #designs { max-width: 1300px; margin: 0 auto; padding: 6rem 3rem; }
@@ -303,7 +358,6 @@
 
   .card-image {
     width: 100%;
-    aspect-ratio: 4/3;
     background: var(--surface2);
     display: flex;
     align-items: center;
@@ -320,6 +374,7 @@
     transition: transform 0.4s;
   }
 
+[]
   .design-card:hover .card-image img { transform: scale(1.04); }
 
   .card-image-placeholder {
@@ -343,15 +398,14 @@
     background: rgba(14,14,14,0.75);
     border: 1px solid var(--border);
     color: var(--muted);
-    width: 32px;
-    height: 32px;
+    width: 80px;
+    height: px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    backdrop-filter: blur(6px);
   }
 
   .card-type {
@@ -459,9 +513,26 @@
 
   .modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
+.modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.modal-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  cursor: zoom-in;
+  transition: opacity 0.2s;
+}
+
+.modal-gallery img:hover { opacity: 0.85; }
+
   .modal-image {
     width: 100%;
-    aspect-ratio: 16/9;
     background: var(--surface2);
     display: flex;
     align-items: center;
@@ -517,20 +588,223 @@
     border-top: 1px solid var(--border);
   }
 
-  .strategy-label {
-    font-size: 0.7rem;
+     /* ── OTHER WORKS MODAL ── */
+  #other-works-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(6px);
+  }
+  #other-works-modal.open { display: flex; }
+ 
+  .ow-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalIn 0.3s ease;
+    padding: 2.5rem;
+  }
+ 
+  .ow-modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+  .ow-modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+ 
+  .ow-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+ 
+  .ow-subtitle {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-bottom: 2.5rem;
+  }
+ 
+  /* Social links row */
+  .ow-section-label {
+    font-size: 0.65rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 1rem;
   }
-
-  .modal-strategy p {
-    color: var(--text);
-    font-size: 0.975rem;
-    line-height: 1.85;
+ 
+  .ow-socials {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
   }
+ 
+  .ow-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.65rem 1.25rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .ow-social-btn svg { flex-shrink: 0; }
+ 
+  .ow-social-btn.youtube:hover { background: #ff000022; border-color: #ff0000; color: #ff4444; }
+  .ow-social-btn.twitter:hover { background: #00000033; border-color: #aaaaaa; color: #ffffff; }
+  .ow-social-btn.linkedin:hover { background: #0a66c222; border-color: #0a66c2; color: #4d9fec; }
+ 
+  /* Old works list */
+  .ow-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+ 
+  .ow-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+ 
+  .ow-link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    gap: 1rem;
+  }
+  .ow-link-item:hover {
+    border-color: rgba(212,168,83,0.4);
+    background: rgba(212,168,83,0.05);
+    transform: translateX(4px);
+  }
+ 
+  .ow-link-info { display: flex; flex-direction: column; gap: 0.2rem; }
+ 
+  .ow-link-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+ 
+  .ow-link-url {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 380px;
+  }
+ 
+  .ow-link-arrow {
+    color: var(--accent);
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .ow-link-item:hover .ow-link-arrow { transform: translateX(4px); }
+
+  /* =============================================
+   ANIMATED STARFIELD BACKGROUND
+   ============================================= */
+#bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: absolute;
+}
+
+#bg::before, #bg::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 85%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 95%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 20%, rgba(255,255,255,0.7) 0%, transparent 100%);
+  background-size: 650px 650px;
+  animation: stars 60s linear infinite;
+  opacity: 0.7;
+}
+
+#bg::after {
+  background-size: 400px 400px;
+  animation-duration: 90s;
+  animation-direction: reverse;
+  opacity: 0.4;
+}
+
+#bg-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(139,92,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(212,168,83,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(10,8,20,0.6) 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes stars {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-50%) rotate(8deg); }
+}
 
   /* PLACEHOLDER DESIGN PREVIEWS */
   .design-preview {
@@ -605,24 +879,23 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Portfolio</a>
+  <a href="#" class="nav-logo">Tristan's Portfolio</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#designs">Designs</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#designs" class="nav-cta">View Work</a></li>
+    <li><a href="#" class="nav-cta" onclick="openOtherWorks(event)">Other Works</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <!-- Starfield Background -->
+<div id="bg"></div>
+<div id="bg-glow"></div>
   <div class="hero-inner">
-    <div class="hero-tag">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;"></span>
-      Graphic Design Portfolio
-    </div>
-    <h1>Design that<br><em>speaks</em> before<br>words do.</h1>
-    <p class="hero-sub">A curated showcase of print and digital design work — from editorial spreads to brand campaigns. Each piece built with intention, strategy, and craft.</p>
+    <h1>Always try your <br><em></e><u>best.</u></em> <br>
+    <h2>-Tristan Reeves</h2>
     <div class="hero-actions">
       <a href="#designs" class="btn-primary">View Designs</a>
       <a href="#about" class="btn-outline">About Me</a>
@@ -632,37 +905,37 @@
 
 <!-- ABOUT -->
 <section id="about">
+  <h1 class="section-label">About Me</p>
   <div class="about-grid">
-    <div class="about-image-wrap reveal">
-      <div class="about-image-placeholder">
-        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="28" r="16" fill="white"/>
-          <path d="M8 72c0-17.673 14.327-32 32-32s32 14.327 32 32" fill="white"/>
-        </svg>
-      </div>
-      <div class="about-badge">
-        <span class="big">6</span>
-        <span class="small">Projects</span>
-      </div>
-    </div>
-    <div class="reveal">
-      <p class="section-label">About Me</p>
-      <h2 class="section-title">Creativity with<br><em style="font-family:'Playfair Display',serif;font-style:italic;">purpose.</em></h2>
+<img alt="Tristan Image.png" 
+  src="https://media.licdn.com/dms/image/v2/D5604AQHypEmC0NGkvA/profile-originalphoto-shrink_900_1200/B56Zao3q9GGoAM-/0/1746589889347?e=1779321600&v=beta&t=FAtZpAkTxVvU20e-WuI16bIYzknF-Wkyg_35Zh0Mf6k" 
+  style="  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 16px;
+  display: block;">      
+  </div>
+      <h1 class="section-title">Beatuy within<br><em></e><u>Chaos.</u></em> <br>
       <p style="color:var(--muted);font-size:0.975rem;line-height:1.85;margin-bottom:1rem;">
-        I'm a graphic design student passionate about visual communication that goes beyond aesthetics. I believe every design decision — from typeface choice to color palette — should serve a strategic purpose.
+I’m a Graphic Design and Game Development major. I like to experiment, try many different things, and see what best fits for whatever I’m working on.
       </p>
       <p style="color:var(--muted);font-size:0.975rem;line-height:1.85;">
-        This portfolio showcases six distinct design disciplines, each approached with research, iteration, and a focus on the audience's experience.
+        This portfolio showcases six different design projects over the semster in Publication Design
       </p>
+    </div>
+          <h2 class="section-label">Skills I've Aquried</h2>
       <div class="skills-list">
         <span class="skill-tag">Adobe InDesign</span>
         <span class="skill-tag">Photoshop</span>
         <span class="skill-tag">Illustrator</span>
-        <span class="skill-tag">Typography</span>
-        <span class="skill-tag">Layout Design</span>
-        <span class="skill-tag">Brand Identity</span>
-        <span class="skill-tag">Print Design</span>
-        <span class="skill-tag">Color Theory</span>
+        <span class="skill-tag">Javascript</span></onhover>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Visual Studio</span>
+        <span class="skill-tag">Blender</span>
+        <span class="skill-tag">Davinci Resolve</span>
+        <span class="skill-tag">Unity</span>
       </div>
     </div>
   </div>
@@ -673,7 +946,7 @@
   <div class="designs-header reveal">
     <p class="section-label">Portfolio</p>
     <h2 class="section-title">Design Work</h2>
-    <p class="section-sub">Six design disciplines, each with a distinct visual strategy. Click any piece to explore the full design rationale.</p>
+    <p class="section-sub">Six design disciplines, each with a distinct visual strategy. Click any piece to learn more about it.</p>
   </div>
 
   <div class="designs-grid" id="designs-grid">
@@ -685,19 +958,39 @@
 <section id="contact">
   <div class="contact-inner reveal">
     <p class="section-label">Get In Touch</p>
-    <h2 class="section-title">Let's work<br>together.</h2>
-    <a href="mailto:your@email.com" class="contact-email">your@email.com</a>
+    <h2 class="section-title">If you have any questions don't be afraid to ask.</h2>
+    <a href="mailto:your@email.com" class="contact-email">tr6905075@gmail.com</a>
     <p style="color:var(--muted);font-size:0.875rem;">Available for freelance projects and internships.</p>
   </div>
 </section>
 
 <footer>
   <a href="#" class="footer-logo">Portfolio</a>
-  <span>© 2025 · All Rights Reserved</span>
-  <span>Graphic Design Student</span>
+
+  <span>Tristan Reeves</span>
 </footer>
 
 <!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+<button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-image" id="modal-image"></div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="modal-tag" id="modal-tag"></span>
+      </div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-strategy">
+        <p class="strategy-label">Design Strategy</p>
+        <p id="modal-strategy"></p>
+        <div class="modal-gallery" id="modal-gallery" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -711,82 +1004,177 @@
       <div class="modal-strategy">
         <p class="strategy-label">Design Strategy</p>
         <p id="modal-strategy"></p>
+        <div class="modal-gallery" id="modal-gallery" style="display:none;"></div>
       </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- OTHER WORKS MODAL -->
+<div id="other-works-modal" onclick="closeOtherWorks(event)">
+  <div class="ow-modal">
+    <button class="ow-modal-close" onclick="closeOtherWorks()">✕</button>
+ 
+    <h2 class="ow-title">Other Works</h2>
+    <p class="ow-subtitle">Projects, socials, and older work from across the web.</p>
+ 
+    <!-- Socials -->
+    <h2 class="ow-section-label"><h1>Find me online</h1>
+    <div class="ow-socials">
+      <a href="https://www.youtube.com/@Mutilated_Star" target="_blank" class="ow-social-btn youtube">
+        <!-- YouTube logo -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        YouTube
+      </a>
+      <a href="https://x.com/MutilatedStar" target="_blank" class="ow-social-btn twitter">
+        <!-- X / Twitter logo -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X (Twitter)
+      </a>
+      <a href="https://www.linkedin.com/in/tristan-reeves-b5159a341/" target="_blank" class="ow-social-btn linkedin">
+        <!-- LinkedIn logo -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+    </div>
+ 
+    <hr class="ow-divider">
+ 
+    <!-- Old works -->
+    <p class="ow-section-label"><h1>Older Projects</h1>
+    <div class="ow-links-list">
+      <a href="https://new.express.adobe.com/webpage/IjfclSNt7eDUu" target="_blank" class="ow-link-item">
+        <div class="ow-link-info">
+          <span class="ow-link-title">Graphic Design 1 Final</span>
+          <span class="ow-link-url">new.express.adobe.com/webpage/IjfclSNt7eDUu</span>
+        </div>
+        <span class="ow-link-arrow">→</span>
+      </a>
+      <a href="https://studio.code.org/projects/applab/Az6yM9IHFUWvd3v8DGnRcUhekpfCowkdtQYpVtioPuQ" target="_blank" class="ow-link-item">
+        <div class="ow-link-info">
+          <span class="ow-link-title">Code.Org — Find The Killer</span>
+          <span class="ow-link-url">studio.code.org/projects/applab/Az6yM9IH…</span>
+        </div>
+        <span class="ow-link-arrow">→</span>
+      </a>
+      <a href="https://scratch.mit.edu/projects/1151477991/" target="_blank" class="ow-link-item">
+        <div class="ow-link-info">
+          <span class="ow-link-title">Scratch — Tanks VS Aliens</span>
+          <span class="ow-link-url">scratch.mit.edu/projects/1151477991</span>
+        </div>
+        <span class="ow-link-arrow">→</span>
+      </a>
     </div>
   </div>
 </div>
 
 <script>
+  function openOtherWorks(e) {
+  e.preventDefault(); // stops it from jumping to top of page
+  document.getElementById('other-works-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOtherWorks(e) {
+  if (!e || e.target === document.getElementById('other-works-modal')) {
+    document.getElementById('other-works-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
 const designs = [
   {
     type: "Advertisement",
-    title: "Fragrance Print Ad",
-    short: "A luxury print advertisement designed for a premium fragrance brand, balancing desire and restraint.",
-    desc: "A full-page magazine advertisement for a fictional luxury fragrance line. The design uses extreme negative space and a single high-contrast hero image to command attention on the page.",
-    strategy: "The core strategy was 'less is more.' Luxury brands communicate exclusivity through restraint — cluttered ads feel cheap. I chose a stark black and cream palette, a single oblique typeface for the brand name, and a large empty field of negative space to let the product breathe. The eye flows naturally from the headline, to the product, to the tagline. Research shows high-end consumers associate white space with quality and premium positioning, which directly informed this layout choice.",
+    title: "Always A Cost",
+    short: "A call out for the effects of substances on how they affect a person.",
+    desc: "When I started on Always A Cost, I was heavily inspired by 'Don't Mix 'Em.' This was a design I saw roughly a semester ago. I always wanted to learn what made that design stand out and to better integrate it into my overall art style. The chance came when the advertisement assignment started; I hate substances, always have since I was a little kid. My mom and dad both did drugs, they both smoke, and they're dropouts, with my family fracturing, thanks in part to drugs. My destination will always be deep-rooted here, so I wanted to show there's always a cost in doing substances. This can be your mental health, people close to you, money, and even your life.",
+    strategy: "Strategy: The core strategy was implied and left the rest to be interpreted. Imply a skull, pills, and cigarettes, and people will assume death, isolation. The red conveys the color of danger, black shows the finality of it all, and is noticeable. This is why the skull, pills, booze, and cigarettes are so big. I don't want to point it out to the user with words because it defeats the entire point, and instead of them thinking about the implications, they would follow a script and no longer care.",
     colors: ["#1a1a2e", "#e8dcc8", "#c9a96e"],
     shape: "ad"
   },
   {
     type: "Brochure",
-    title: "Eco Travel Tri-Fold",
-    short: "A three-panel brochure for a sustainable eco-tourism company, communicating trust and adventure.",
-    desc: "A tri-fold brochure designed for a sustainable travel company. The layout guides readers through discovery, information, and call-to-action across three panels using organic imagery and earthy tones.",
-    strategy: "I structured the information hierarchy to mirror the customer journey: the front panel creates emotional desire (stunning landscape imagery), the inside panels provide practical information with clear visual hierarchy, and the back panel delivers the call-to-action. I chose an earthy olive and terracotta palette to reinforce the brand's eco-conscious identity — colors borrowed from nature signal authenticity. Rounded sans-serif type communicates approachability, while generous padding around text blocks prevents the 'data dump' feeling common in travel brochures.",
+    title: "Ukraine War Brochure",
+    short: "A brochure showing the total deaths within Ukraine's war.",
+    desc: "This brochure was in part one of my most despised projects. The main reason is due to the very bottom part of the original. This is horribly inefficient in space, and with the images, it looked horrible. Other factors that upset me more and more are the skull, typo, and the balance. It caused me to redesign and remove the typo, the skull, and make it more center-balanced. I'd also make a smaller version, which is more efficient in space for Newspapers and Websites as well.",
+    strategy: "Strategy: There are two versions of this strategy in the original version; it was dramatic. Make the skull big, let it take up a big part so people will notice it, and make the graph off-center so people's eyes are drawn to it. This dramatic feeling was messy, and sure, it fit into the themes of war. However, it made me think that it could be better. The second version would be simpler and make it sleeker and cleaner. No need to be dramatic when the info speaks for itself; remove the skull. The chart is big enough, making it off-center only upsets people, so put it back in the center, and instead of making the bottom part vertical basied then horzional baised. This vastly improved the design as a result and made me pretty happy.",
     colors: ["#3d5a3e", "#c4a882", "#f0e8d8"],
-    shape: "brochure"
+    shape: "brochure",
+    images: [
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/old-ukraine-casualties-infographic.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Tristan%20Reeves%20T-infographic.png?raw=true"
+  ]
   },
   {
     type: "Party Flyer",
-    title: "Summer Rooftop Rave",
-    short: "A bold, high-energy event flyer for a rooftop music event — designed to stop the scroll.",
-    desc: "An event flyer for a summer rooftop music event. Designed for both print and social media, it needed to communicate energy, time, and place instantly in a crowded social feed.",
-    strategy: "Flyers compete for attention in chaotic environments — a phone screen, a bulletin board, a stack of handouts. The design principle here was 'hierarchy at a glance': the event name readable at arm's length, supporting details readable up close. I used a heavy neon-on-dark palette to evoke nightlife and energy. The diagonal typography creates tension and movement, mimicking the kinetic feeling of dancing. Every element is oversized and deliberately unpolished — this audience reads 'raw' design as authentic street culture, not a corporate event.",
+    title: "Spring Break Flyer",
+    short: "A Tropical themed flyer based on the (fake) spring event.",
+    desc: "This flyer had alot of things to include. This worried me, considering my prior experience; the more data to consider, the more likely the design would be as a result. The best example of this is my art poster, which ended up getting too many details and bled into chaotic noise, making it impossible to notice a vocal point. That's why, when starting this flyer, I spent time just looking up beach designs. Overall, this would lead me to the bottom part with all the minor beach events and the top to major events in images. Since I didn't know whether to include everything or not, I'd figure I'd be on the safe side and include as much as I could.",
+    strategy: "Strategy: Include as much as I can, keep the tropical theme, keep it simple, and make sure there's a clear vocal point. This is why the bottom part is the most complex, including as many minor events as possible. The top part would be big with simple images, so it'd be difficult to make it too complex. I'd also make sure the event with text would be the biggest part. Your eyes are drawn to the black text on a white background. Overall, I did get every event, but I'm pretty sure it could be simpler if I had more time to imply volleyball instead of explicitly showing it.",
     colors: ["#0d0d0d", "#ff006e", "#00f5d4"],
     shape: "flyer"
   },
   {
     type: "Magazine Spread",
-    title: "Architecture Quarterly Feature",
-    short: "A two-page editorial spread combining striking photography with thoughtful typographic layout.",
-    desc: "A two-page magazine spread for an architecture and design publication. The layout needed to balance full-bleed photography with a substantial article body without either element overwhelming the other.",
-    strategy: "The challenge in editorial design is tension: the spread must work as a single visual composition AND be readable as sequential text. I broke the grid deliberately — text wrapping into the photograph's negative space creates depth and visual interest. The typographic system uses a large display serif for pull quotes (set at an angle to interrupt the reader pleasingly), a compact serif for body text (maximizing words-per-page without sacrificing readability), and ruled lines to separate zones. Color comes entirely from the photograph, with the typography in strict black and warm off-white to avoid competing.",
+    title: "Bigfoot Magazine",
+    short: "A small Magazine about the legend of Bigfoot.",
+    desc: "This is a small story of Bigfoot, being roughly six pages. In this, I'd try to use some low-quality provided images along with SVG graphics in a story. Due to these limitations, it made me focus less on how to make the images look good. This made me focus more on how I can put all these images together. This made me go for a story narrative, and put it as we found Bigfoot, the legends said he's deadly, but he's secretly lonely.",
+    strategy: "Strategy: I'd start with the color, going for a soft green, then going to a softer yellow and darker green. After that, I'd focus on the headers and footers, making them consistent throughout the design. Making it only differ through the intro so people know where the story starts. The footers would have different visual elements from one to another, from the trees to the first one, to footprints on the 3rd and 4th, then 6th, having a single tree. I want to ensure that every element is worked into this story, which is why I even made the quotes, captions, and headers push more into this narrative, hinting at each page. This gives a story at a glance so a reader could tell long before even reading it.",
     colors: ["#f5f0e8", "#1c1c1c", "#8b7355"],
-    shape: "magazine"
+    shape: "magazine",
+      images: [
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-1%20Magazine.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-2%20Magazine.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-3%20Magazine.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-4%20Magazine.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-5%20Magazine.png?raw=true",
+    ]
   },
   {
     type: "Newspaper",
-    title: "Campus Tribune Front Page",
-    short: "A broadsheet-style newspaper front page balancing multiple stories with clear editorial hierarchy.",
-    desc: "A front page design for a fictional university newspaper. The layout had to prioritize three stories of varying importance while maintaining the credibility and readability expected of print news.",
-    strategy: "Newspaper design is fundamentally about hierarchy and trust. Readers make snap decisions about importance based on type size, column width, and placement — I used a traditional broadsheet column grid to leverage that cultural literacy. The masthead uses a condensed serif to communicate authority and history. The main headline dominates at roughly 4x the body size, with subheads and bylines in a clear descending scale. I avoided color photography tinting (a common amateur mistake that looks tabloid) and instead used a single spot color — deep red — for the masthead and breaking-news label only, keeping the rest black and white for seriousness.",
+    title: "What's The Time Newspaper",
+    short: "A newspaper front page balancing multiple stories around war, Trump, global issues, and war.",
+    desc: "This design would end up focusing heavily on dark events such as global warming, lack of stability in the president and government, and two wars going on around the world. The reason I did this was not to be negative; it was because most of the major news recently has been bad. I had early ideas of trying to be more positive, but it was scrapped because of AP News having pretty negative stories and clashes with the overall themes. I'd also look at newspaper designs and try to mimic their formatting, including the time, date, place, and edition. Last but not least, I'd include a texture as well so it would seem to be more realistic.",
+    strategy: "Strategy: To start things out, I'd focus on the overall space. I wanted to make sure there's enough room not only for the brochure but also for the main subject. The figure for the main subject would be Donald Trump due to his scale and being above the marking line. I'd then go into stories of global warming, war, and even distrust to show the raising tetions for our president and around the world. I'd put borders everywhere to make sure the person won't accidentally read into another story. Last but not least, I'd include the time, texture, and even all other newspaper formatting to make it look realistic.",
     colors: ["#f8f4ec", "#1a1a1a", "#b81c1c"],
     shape: "newspaper"
   },
   {
     type: "Game Cover",
-    title: "Void Protocol",
-    short: "A sci-fi video game box art concept built around atmospheric tension and genre-savvy visual language.",
-    desc: "Box art / key art design for a fictional sci-fi horror video game. The design needed to communicate genre (sci-fi horror), tone (isolation, dread), and platform viability at both large (shelf) and small (thumbnail) scales.",
-    strategy: "Game cover art must work at wildly different sizes — from a 10-inch retail box to a 120px Steam thumbnail. I designed this in layers: the core silhouette reads at small sizes, the face detail rewards close inspection. The title treatment uses a custom-feel distressed typeface with a subtle glow — enough to register as 'sci-fi' without being cliché. The palette is deliberately constrained to two colors (deep navy and acid cyan) plus near-black — a limited palette codes as 'prestige' in the gaming space and makes thumbnails pop against colorful competitor tiles. The composition uses a low-horizon, looming figure — a classical technique to make the subject feel imposing and unknowable.",
+    title: "Finality",
+    short: "This is a beta mockup of a game that doesn't exist quite yet.",
+    desc: "There'll be three versions of this mockup, one would be from a board game, another one would be a troll game as a joke for Switch shovelware, and then this one. This is called Finality since it's what the game I'm thinking of would be around, the main person on the cover is simply called Star Knight. Has a real name, but nobody knows it, though. I modeled them in Blender roughly 4 years ago. I do want to redo this model, but I haven't had time for it, the background would be a scene made within Unity itself, so I could include the grass, trees, cathedral, and even rocks. The scene was made roughly 4 weeks ago, before this website, so it's recent compared to the model. I wanted Star Knight to contrast the background, which is why their eyes glow red when the background is green; the massive amount of green makes the little red pop out.",
+    strategy: "Strategy: Since the class preferred Star Knight the most, I'd go to describe this design. Star Knight would be from a Blender render 4 years ago, while having roughly 170,000 triangles (1/2 the size of a DMC 5 character). Their topology is massively inefficient compared to how simple the model is. However, I'd use Star Knight as the main cover of the image, rendering it in Blender on cycles (took 2 mins on a Laptop RTX 5070), then cut out the background. I'd then take a glass background from Adobe stock, put it behind him, and then go into my Unity project. I was forced to download Unity to take 8k photos, take a few photos around the environment, and then add the one I thought looked the best. After that, I'd color match Star Knight to the background and add a glow to the eyes along with the PS4 game cover. Star Knight was the shortest time it took me in the Design Phase out of any project because I already had assets from other projects, spending more time on the logo than I did with the overall image.\n\nBeta Images + Concepts Under here",
     colors: ["#050d1a", "#00e5ff", "#1a3a5c"],
-    shape: "game"
+    shape: "game",
+    images: [
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Star%20Knight%20Render%20Smaller.png?raw=true",
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Enviorment%201.jpg?raw=true",  
+      "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Enviorment%202.jpg?raw=true",
+
+    ]
   }
 ];
 
-function buildPreviewSVG(shape, colors) {
-  const [c1, c2, c3] = colors;
-  if (shape === 'ad') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c1}"/><rect x="60" y="30" width="140" height="200" fill="${c2}" opacity="0.15"/><rect x="60" y="30" width="140" height="200" fill="none" stroke="${c2}" stroke-width="0.5"/><ellipse cx="130" cy="155" rx="50" ry="65" fill="${c3}" opacity="0.6"/><rect x="60" y="248" width="280" height="1" fill="${c2}" opacity="0.4"/><rect x="60" y="260" width="180" height="3" fill="${c2}" opacity="0.7"/><rect x="60" y="270" width="100" height="2" fill="${c2}" opacity="0.4"/><rect x="220" y="60" width="120" height="20" fill="${c3}" opacity="0.8" rx="2"/><rect x="220" y="88" width="90" height="2" fill="${c2}" opacity="0.5"/><rect x="220" y="96" width="110" height="2" fill="${c2}" opacity="0.5"/><rect x="220" y="104" width="80" height="2" fill="${c2}" opacity="0.5"/></svg>`;
+function buildPreviewSVG(shape, colors, imageUrl) {
+   const [c1, c2, c3] = colors;
+  if (shape === 'ad') return `<img alt="ad.png" src= "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Substance%2520Abuse_.png?raw=true" style="max-width: 100%;">`;
   
-  if (shape === 'brochure') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c3}"/><rect x="10" y="10" width="118" height="280" fill="${c1}" opacity="0.9" rx="4"/><rect x="141" y="10" width="118" height="280" fill="${c1}" opacity="0.75" rx="4"/><rect x="272" y="10" width="118" height="280" fill="${c1}" opacity="0.6" rx="4"/><rect x="22" y="22" width="94" height="60" fill="${c2}" opacity="0.5" rx="2"/><rect x="22" y="90" width="60" height="6" fill="${c2}" opacity="0.8" rx="1"/><rect x="22" y="102" width="94" height="2" fill="${c2}" opacity="0.4"/><rect x="22" y="110" width="80" height="2" fill="${c2}" opacity="0.4"/><rect x="22" y="118" width="88" height="2" fill="${c2}" opacity="0.4"/><rect x="153" y="22" width="94" height="40" fill="${c2}" opacity="0.4" rx="2"/><rect x="153" y="70" width="94" height="40" fill="${c2}" opacity="0.4" rx="2"/><rect x="153" y="118" width="60" height="4" fill="${c2}" opacity="0.6" rx="1"/><rect x="153" y="128" width="94" height="2" fill="${c2}" opacity="0.35"/><rect x="284" y="22" width="94" height="80" fill="${c2}" opacity="0.3" rx="2"/><rect x="284" y="180" width="60" height="10" fill="${c2}" opacity="0.7" rx="2"/></svg>`;
+  if (shape === 'brochure') return `<img alt="brochure.png" src= "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Tristan%20Reeves%20N-infographic.png?raw=true" style="max-width: 100%;">`;
   
-  if (shape === 'flyer') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c1}"/><rect x="0" y="0" width="400" height="300" fill="url(#fg)" opacity="0.3"/><defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${c2}"/><stop offset="100%" stop-color="${c3}"/></linearGradient></defs><line x1="20" y1="280" x2="200" y2="20" stroke="${c2}" stroke-width="60" opacity="0.12"/><line x1="120" y1="280" x2="300" y2="20" stroke="${c3}" stroke-width="40" opacity="0.1"/><rect x="20" y="110" width="360" height="18" fill="${c2}" opacity="0.9" rx="2"/><rect x="20" y="136" width="260" height="12" fill="${c3}" opacity="0.8" rx="2"/><rect x="20" y="158" width="180" height="8" fill="white" opacity="0.4" rx="1"/><rect x="20" y="40" width="120" height="8" fill="white" opacity="0.5" rx="1"/><rect x="20" y="56" width="80" height="6" fill="white" opacity="0.3" rx="1"/><rect x="20" y="240" width="100" height="6" fill="white" opacity="0.4" rx="1"/><rect x="20" y="254" width="60" height="4" fill="white" opacity="0.25" rx="1"/><circle cx="340" cy="50" r="30" fill="${c3}" opacity="0.2"/><circle cx="340" cy="50" r="20" fill="${c3}" opacity="0.3"/></svg>`;
+  if (shape === 'flyer') return `<img alt="flyer.png" src= "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/FlyerReeves.png?raw=true" style="max-width: 100%;">`;
   
-  if (shape === 'magazine') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c1}"/><rect width="200" height="300" fill="${c3}" opacity="0.5"/><rect x="210" y="30" width="170" height="4" fill="${c2}" rx="1"/><rect x="210" y="44" width="170" height="30" fill="${c2}" opacity="0.9" rx="1"/><rect x="210" y="82" width="140" height="2" fill="${c2}" opacity="0.5" rx="1"/><rect x="210" y="90" width="170" height="2" fill="${c2}" opacity="0.3" rx="1"/><rect x="210" y="98" width="170" height="2" fill="${c2}" opacity="0.3" rx="1"/><rect x="210" y="106" width="155" height="2" fill="${c2}" opacity="0.3" rx="1"/><rect x="210" y="114" width="170" height="2" fill="${c2}" opacity="0.3" rx="1"/><rect x="210" y="130" width="80" height="40" fill="${c3}" opacity="0.4" rx="1"/><rect x="300" y="130" width="80" height="40" fill="${c3}" opacity="0.4" rx="1"/><rect x="0" y="220" width="200" height="50" fill="${c2}" opacity="0.1"/><rect x="10" y="228" width="80" height="6" fill="${c2}" opacity="0.6" rx="1"/><rect x="10" y="242" width="180" height="2" fill="${c2}" opacity="0.4"/><rect x="10" y="250" width="160" height="2" fill="${c2}" opacity="0.4"/></svg>`;
+  if (shape === 'magazine') return `<img alt="magazine.png" src= "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Big%20Foot-1%20Magazine.png?raw=true" style="max-width: 100%;">`;
   
-  if (shape === 'newspaper') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c1}"/><rect x="10" y="10" width="380" height="25" fill="${c2}" rx="2"/><rect x="10" y="10" width="380" height="3" fill="${colors[2]}" rx="1"/><rect x="10" y="42" width="380" height="1" fill="${c2}" opacity="0.2"/><rect x="10" y="50" width="380" height="22" fill="${c2}" opacity="0.9" rx="1"/><rect x="10" y="78" width="380" height="1" fill="${c2}" opacity="0.15"/><rect x="10" y="84" width="118" height="100" fill="${c2}" opacity="0.07" rx="1"/><rect x="10" y="84" width="118" height="2" fill="${c2}" opacity="0.6" rx="1"/><rect x="10" y="92" width="118" height="1.5" fill="${c2}" opacity="0.25"/><rect x="10" y="97" width="118" height="1.5" fill="${c2}" opacity="0.25"/><rect x="10" y="102" width="110" height="1.5" fill="${c2}" opacity="0.25"/><rect x="10" y="107" width="118" height="1.5" fill="${c2}" opacity="0.25"/><rect x="141" y="84" width="118" height="50" fill="${c2}" opacity="0.12" rx="1"/><rect x="141" y="140" width="118" height="1.5" fill="${c2}" opacity="0.5"/><rect x="141" y="148" width="118" height="1.5" fill="${c2}" opacity="0.25"/><rect x="141" y="153" width="100" height="1.5" fill="${c2}" opacity="0.25"/><rect x="272" y="84" width="118" height="30" fill="${c2}" opacity="0.12" rx="1"/><rect x="272" y="120" width="118" height="1.5" fill="${c2}" opacity="0.5"/><rect x="272" y="128" width="118" height="1.5" fill="${c2}" opacity="0.25"/><rect x="272" y="133" width="100" height="1.5" fill="${c2}" opacity="0.25"/><rect x="10" y="196" width="380" height="1" fill="${c2}" opacity="0.15"/><rect x="10" y="204" width="240" height="2" fill="${c2}" opacity="0.5"/><rect x="10" y="212" width="380" height="1.5" fill="${c2}" opacity="0.2"/><rect x="10" y="218" width="370" height="1.5" fill="${c2}" opacity="0.2"/><rect x="10" y="224" width="380" height="1.5" fill="${c2}" opacity="0.2"/><rect x="10" y="230" width="350" height="1.5" fill="${c2}" opacity="0.2"/><rect x="10" y="250" width="380" height="1" fill="${c2}" opacity="0.1"/><rect x="10" y="258" width="380" height="1.5" fill="${c2}" opacity="0.15"/><rect x="10" y="264" width="360" height="1.5" fill="${c2}" opacity="0.15"/></svg>`;
+  if (shape === 'newspaper') return `<img alt="newspaper.png" src= "https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Tristan%20Newspaper%20Design%20Assignment.png?raw=true" style="max-width: 100%;">`;
   
-  if (shape === 'game') return `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="design-preview"><rect width="400" height="300" fill="${c1}"/><defs><radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="${c2}" stop-opacity="0.3"/><stop offset="100%" stop-color="${c1}" stop-opacity="0"/></radialGradient></defs><rect width="400" height="300" fill="url(#glow)"/><ellipse cx="200" cy="160" rx="60" ry="80" fill="${c2}" opacity="0.08"/><path d="M160 280 L200 60 L240 280 Z" fill="${c2}" opacity="0.15"/><ellipse cx="200" cy="140" rx="35" ry="45" fill="${c2}" opacity="0.25"/><rect x="40" y="240" width="320" height="3" fill="${c2}" opacity="0.8" rx="1"/><rect x="40" y="252" width="200" height="12" fill="${c2}" opacity="0.7" rx="2"/><rect x="40" y="270" width="120" height="6" fill="${c2}" opacity="0.4" rx="1"/><rect x="360" y="252" width="2" height="40" fill="${c2}" opacity="0.5"/><rect x="340" y="20" width="50" height="8" fill="${c2}" opacity="0.4" rx="1"/><circle cx="200" cy="120" r="18" fill="none" stroke="${c2}" stroke-width="1.5" opacity="0.5"/><circle cx="200" cy="120" r="8" fill="${c2}" opacity="0.4"/></svg>`;
+  if (shape === 'game') return `<img alt="Star Knight.png" src="https://github.com/MutilatedStar/Beta-Website/blob/main/Images/Star%20Knight.png?raw=true" style="max-width: 100%;">`;
 }
 
 const grid = document.getElementById('designs-grid');
@@ -795,15 +1183,15 @@ designs.forEach((d, i) => {
   const card = document.createElement('div');
   card.className = 'design-card reveal';
   card.innerHTML = `
-    <div class="card-image">
+    <div class="card-image" onclick="openModal(${i})">
       ${buildPreviewSVG(d.shape, d.colors)}
-      <div class="card-number">${String(i+1).padStart(2,'0')}</div>
+      <div class="card-number">${"Project " + String(i+1).padStart(2,)}</div>
       <div class="card-type">${d.type}</div>
     </div>
-    <div class="card-body">
+    <div class="card-body" onclick="openModal(${i})">
       <h3 class="card-title">${d.title}</h3>
       <p class="card-description">${d.short}</p>
-      <button class="card-read-more" onclick="openModal(${i})">Read strategy &rarr;</button>
+      <button class="card-read-more" onclick="openModal(${i})">Read More &rarr;</button>
     </div>
   `;
   grid.appendChild(card);
@@ -813,20 +1201,55 @@ function openModal(i) {
   const d = designs[i];
   document.getElementById('modal-tag').textContent = d.type;
   document.getElementById('modal-title').textContent = d.title;
-  document.getElementById('modal-desc').textContent = d.desc;
-  document.getElementById('modal-strategy').textContent = d.strategy;
-  document.getElementById('modal-image').innerHTML = buildPreviewSVG(d.shape, d.colors);
-  document.getElementById('modal-image').querySelector('svg').style.height = '100%';
+  document.getElementById('modal-desc').innerHTML = d.desc;
+  document.getElementById('modal-strategy').innerHTML = d.strategy;
+
+  const imgEl = document.getElementById('modal-image');
+  imgEl.innerHTML = buildPreviewSVG(d.shape, d.colors, d.image);
+  const svg = imgEl.querySelector('svg');
+  if (svg) svg.style.height = '100%';
+
+  // Render extra images gallery if present
+  const galleryEl = document.getElementById('modal-gallery');
+  if (d.images && d.images.length > 0) {
+  galleryEl.innerHTML = d.images.map(src =>
+    `<img src="${src}" alt="Additional view" onclick="openLightbox('${src}')">`
+  ).join('');
+    galleryEl.style.display = 'grid';
+  } else {
+    galleryEl.innerHTML = '';
+    galleryEl.style.display = 'none';
+  }
+
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal(e) {
-  if (!e || e.target === document.getElementById('modal-overlay') || e.type === 'click' && !e.currentTarget.classList.contains('modal')) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
     document.getElementById('modal-overlay').classList.remove('open');
     document.body.style.overflow = '';
   }
 }
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(e) {
+  if (!e || e.target === document.getElementById('lightbox') || e.currentTarget.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+}
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeLightbox();
+    closeModal();
+  }
+});
 
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
@@ -840,5 +1263,10 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Zoomed view">
+</div>
 </body>
 </html>
